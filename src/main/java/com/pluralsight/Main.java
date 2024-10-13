@@ -1,5 +1,4 @@
 package com.pluralsight;
-
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -12,24 +11,24 @@ public class Main {
     // Top level menu,
     static void appHomeScreen(){
 
-        System.out.println("Add Deposit");
-        System.out.println("Make Payment (Debit)");
-        System.out.println("Show Ledger");
-        System.out.println("Exit form ");
+        System.out.println("\n --- Home Screen ---\n");
+        System.out.println("D)      Add Deposit");
+        System.out.println("P)      Make Payment (Debit)");
+        System.out.println("L)      Show Ledger");
+        System.out.println("X)      Exit Application");
     }
 
-    // Deposit Menu,
-    static void appDepositMenu(){
+    // Method to add Deposit
+    static void appDeposit(){
         System.out.println("This is your Deposit Menu: \n");
-
     }
 
-    //Payment Menu,
+    // Method to make Payment
     static void appLegerMenu(){
         System.out.println("This is your Ledger Menu: \n");
     }
 
-    //Ledger Menu
+    //Method to display Ledger
     static void ledgerMenu(){
         System.out.println("This is your Ledger Menu: \n");
     }
@@ -53,5 +52,7 @@ public class Main {
     static void displayReportsLedger(){
         System.out.println("All Deposits: ");
     }
+
+
 
 }
