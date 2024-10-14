@@ -1,0 +1,17 @@
+  {
+
+  String date = tokens[0];
+                String time = tokens[1];
+                String description = tokens[2];
+                String vendor = tokens[3];
+                double amount = Double.parseDouble(tokens[4]);
+                Transaction t = new Transaction(date, time, description, vendor, amount);
+
+
+  }
+
+
+   while ((input = bufferedReader.readLine()) != null) {
+                  String[] tokens = input.split(Pattern.quote("|"));
+                  transaction.add(new Transaction((LocalDate.parse(tokens[0],formatter1)),(LocalTime.parse(tokens[1],formatter2)),tokens[2], tokens[3],Double.parseDouble(tokens[4])));
+              }

@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Utilities {
@@ -12,12 +15,33 @@ public class Utilities {
         return input;
     }
 
-    public static char PromptForStringAndGetChar(String prompt){
+    public static LocalDate PromptForLocalDate(String prompt){
+        System.out.print(prompt);
+        String input = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(input,formatter);
+
+
+        return localDate;
+    }
+    public static LocalTime PromptForLocalTime(String prompt){
+        System.out.print(prompt);
+        String input = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss, a");
+        LocalTime localTime = LocalTime.parse(input,formatter);
+
+
+        return localTime;
+    }
+
+
+    public static char PromptForChar(String prompt){
         System.out.print(prompt);
         String input = scanner.nextLine().trim().toUpperCase();
         char chr = input.charAt(0);
         return chr;
     }
+
 
 
 
