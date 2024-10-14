@@ -15,3 +15,71 @@
                   String[] tokens = input.split(Pattern.quote("|"));
                   transaction.add(new Transaction((LocalDate.parse(tokens[0],formatter1)),(LocalTime.parse(tokens[1],formatter2)),tokens[2], tokens[3],Double.parseDouble(tokens[4])));
               }
+
+              2024-10-14
+              Please input the time of the transaction (e.g. HH:mm:ss)11:59:5
+              Please provide a brief description of the deposit:  rent
+              Please enter the name of the vendor or source:  landlord
+              Please input the deposit amount (e.g., 100.50):3500.00
+
+
+              /*String description = Utilities.PromptForString("Please provide a brief description of the deposit:  ");
+                      String vendor = Utilities.PromptForString("Please enter the name of the vendor or source:  ");
+                      double amount = Utilities.PromptForDouble("Please input the deposit amount (e.g., 100.50):");
+                      LocalDate date = LocalDate.now();
+                      LocalTime time = LocalTime.now();
+                      transactions.add(new Transaction(date,time,description,vendor,amount));*/
+
+
+{  has been refactored
+    static void addRecentDeposit(){
+
+        String description = Utilities.PromptForString("Please provide a brief description of the deposit:  ");
+        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source:  ");
+        double amount = Utilities.PromptForDouble("Please input the deposit amount (e.g., 100.50):");
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        transactions.add(new Transaction(date,time,description,vendor,amount));
+        System.out.println("You have successfully recorded the transaction!");
+    }
+
+    static void addOldDeposit(){
+
+        String description = Utilities.PromptForString("Please provide a brief description of the deposit:  ");
+        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source:  ");
+        double amount = Utilities.PromptForDouble("Please input the deposit amount (e.g., 100.50):  ");
+        String dateInput = Utilities.PromptForString("Please input the date of the transaction (e.g. YYYY-MM-DD):  ");
+        String timeInput = Utilities.PromptForString("Please input the time of the transaction (e.g. HH:mm:ss):  ");
+        LocalDate date = LocalDate.parse(dateInput,formatter1);
+        LocalTime time = LocalTime.parse(timeInput,formatter2);
+        transactions.add(new Transaction(date,time,description,vendor,amount));
+        System.out.println("You have successfully recorded the transaction!");
+    }
+
+    static void addRecentPayment(){
+
+        String description = Utilities.PromptForString("Please provide a brief description of the payment:  ");
+        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source:  ");
+        double amount = Utilities.PromptForDouble("Please input the payment amount (e.g., 100.50):");
+        amount *= -1;
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        transactions.add(new Transaction(date,time,description,vendor,amount));
+        System.out.println("You have successfully recorded the payment!");
+    }
+
+    static void addOldPayment(){
+
+        String description = Utilities.PromptForString("Please provide a brief description of the payment:  ");
+        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source:  ");
+        double amount = Utilities.PromptForDouble("Please input the payment amount (e.g., 100.50):  ");
+        amount *= -1;
+        String dateInput = Utilities.PromptForString("Please input the date of the payment (e.g. YYYY-MM-DD):  ");
+        String timeInput = Utilities.PromptForString("Please input the time of the payment (e.g. HH:mm:ss):  ");
+        LocalDate date = LocalDate.parse(dateInput,formatter1);
+        LocalTime time = LocalTime.parse(timeInput,formatter2);
+        transactions.add(new Transaction(date,time,description,vendor,amount));
+        System.out.println("You have successfully recorded the payment!");
+    }
+
+    }

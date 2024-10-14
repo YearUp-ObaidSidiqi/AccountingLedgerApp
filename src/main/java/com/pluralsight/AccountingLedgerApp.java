@@ -1,5 +1,4 @@
 package com.pluralsight;
-
 import java.io.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
@@ -7,7 +6,10 @@ import java.time.LocalTime;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 
-public class Main {
+
+public class AccountingLedgerApp {
+
+
     static DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static ArrayList<Transaction> transactions;
@@ -41,7 +43,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         var bufferedReader = new BufferedReader(new FileReader("accountingLegerApplicationData.csv"));
-       // var bufferWriter = new BufferedWriter (new FileWriter("accountingLegerApplicationData.csv"));
+        // var bufferWriter = new BufferedWriter (new FileWriter("accountingLegerApplicationData.csv"));
 
 
 
@@ -51,31 +53,31 @@ public class Main {
         appHomeScreen();
         boolean exitApp = true;
         while (exitApp){
-        char command = Utilities.PromptForChar("Please Type and Enter From: [D], [P], [L], [X] :  ");
-        switch (command){
+            char command = Utilities.PromptForChar("Please Type and Enter From: [D], [P], [L], [X] :  ");
+            switch (command){
 
-            case 'D':
-                addDeposit();
-                break;
-            case 'P':
-                addPayment();
-                break;
-            case 'L':
-                ledgerMenu();
-                break;
-            case 'X':
+                case 'D':
+                    addDeposit();
+                    break;
+                case 'P':
+                    addPayment();
+                    break;
+                case 'L':
+                    ledgerMenu();
+                    break;
+                case 'X':
                     System.out.println("Thank you for choosing Us! ");
                     exitApp = false;
                     break;
-            default:
-                System.out.println("*** ERROR! ***  Invalid Selection: Please Type and Enter From: [D], [P], [L], [X] : ");
-             }
+                default:
+                    System.out.println("*** ERROR! ***  Invalid Selection: Please Type and Enter From: [D], [P], [L], [X] : ");
+            }
         }
 
     }
     // Top level menu,
     static void appHomeScreen(){
-       // System.out.println("-----------------------------------------------------------------------\n");
+        // System.out.println("-----------------------------------------------------------------------\n");
         System.out.println("--------------- This is Your Home Screen Please Select ----------------");
         System.out.println("D)      Add Deposit");
         System.out.println("P)      Make Payment (Debit)");
@@ -116,47 +118,6 @@ public class Main {
             }
         }
     }
-
-
-
-    static Transaction getTransactionDetails(boolean isRecent, boolean isDeposit) {
-        String description = Utilities.PromptForString("Please enter a short description for this transaction (e.g., 'Salary', 'Rent Payment'):  ");
-        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source (e.g., 'Amazon', 'Employer Name'):  ");
-        double amount = Utilities.PromptForDouble("Please input the amount (e.g., 800.50):  ");
-
-        // To make the amount negative
-        if (!isDeposit) {
-            amount *= -1;
-        }
-
-        LocalDate date;
-        LocalTime time;
-
-        if (isRecent) {
-            // Use current date and time
-            date = LocalDate.now();
-            time = LocalTime.now();
-        } else {
-            // Prompt older transactions
-            String dateInput = Utilities.PromptForString("Please enter the transaction date (format: YYYY-MM-DD, e.g., 2024-10-14):  ");
-            String timeInput = Utilities.PromptForString("Please enter the transaction time (format: HH:mm:ss, e.g., 14:30:00):  ");
-            date = LocalDate.parse(dateInput, formatter1);
-            time = LocalTime.parse(timeInput, formatter2);
-        }
-
-        return new Transaction(date, time, description, vendor, amount);
-    }
-
-    static void addTransaction(boolean isRecent, boolean isDeposit){
-        Transaction transaction = getTransactionDetails(isRecent,isDeposit);
-        transactions.add(transaction);
-        System.out.println("You have successfully recorded the transaction!");
-    }
-
-
-
-
-
 
 
     // Method to make Payment
@@ -240,8 +201,6 @@ public class Main {
         transactions.add(new Transaction(date,time,description,vendor,amount));
         System.out.println("You have successfully recorded the payment!");
     }
-
-
     //Method to display Ledger
     static void ledgerMenu(){
         System.out.println("This is your Ledger Menu: \n");
@@ -251,7 +210,7 @@ public class Main {
     //Ledger - Display all Entries
     static void displayAllEntriesLedgers(){
         System.out.println("All the Entries: ");
-       // listTransaction();
+        // listTransaction();
     }
 
     // Display only Deposits
@@ -279,5 +238,4 @@ public class Main {
             System.out.printf("%-12s %-10s %-30s %-15s %10s%n", t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount());
         }
     }
-
 }

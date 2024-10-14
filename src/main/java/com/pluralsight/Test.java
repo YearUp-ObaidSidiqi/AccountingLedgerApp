@@ -21,25 +21,9 @@ public class Test {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        getTransactions();
-        Thread.sleep(1000);
-
-
-        LocalDate localDate = LocalDate.now();
-        LocalTime localTime = LocalTime.now();
-
-       /* System.out.println(localDate.format(formatter1));
-        System.out.println(localTime.format(formatter2));*/
-
-        // String date = "2024-10-13";
-
-         String description ="rent";
-         String vendor= "landlord";
-         double amount =4500.00;
-
-        transactions.add(new Transaction(localDate,localTime,description,vendor,amount));
-        listTransaction();
-
+        double x = 25669;
+        x *= -1;
+        System.out.println(x);
 
     }
    public static void listTransaction(){
