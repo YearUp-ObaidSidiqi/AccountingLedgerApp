@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class TEST {
 
+    static LocalDate currentDate = LocalDate.now();
 
     static DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -22,7 +25,32 @@ public class TEST {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        System.out.println("");
+        int currentMonth = currentDate.getMonthValue();
+        int currentYear = currentDate.getYear();
+        System.out.println(currentMonth);
+        System.out.println(currentYear);
+        int currentMonth2 = currentDate.getMonthValue()-1;
+        int currentYear2 = currentDate.getYear()-1;
+        System.out.println(currentMonth2);
+        System.out.println(currentYear2);
+
+
+            System.out.println("-----------------------------------------------------------------------");
+            System.out.println("-------------- This is " + currentDate.getMonth() +" Report section ----------------");
+            System.out.println("-----------------------------------------------------------------------\n");
+            for(Transaction t : transactions ){
+                int transactionMonth = ((t.getDate().getMonthValue())-1);
+                int transactionYear = t.getDate().getYear();
+
+                if((transactionMonth)==currentMonth && currentYear==transactionYear) /// the argument!
+                    // Print each transaction in a formatted manner
+                    System.out.printf(
+                            "%-12s %-10s %-30s %-15s %10s%n",
+                            t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
+                    );
+            }
+            System.out.println("-----------------------------------------------------------------------\n");
+
 
 
 

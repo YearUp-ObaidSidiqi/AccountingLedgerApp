@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.io.*;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
 public class Main {
     static DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
+    static LocalDate currentDate = LocalDate.now();
+    static int currentMonth = currentDate.getMonthValue();
+    static int currentYear = currentDate.getYear();
     public static ArrayList<Transaction> transactions;
 
     static {
@@ -39,12 +43,7 @@ public class Main {
         }
         return transaction;
     }
-
     public static void main(String[] args) throws IOException {
-
-        System.out.println("\n-----------------------------------------------------------------------");
-        System.out.println("----------     Welcome to Accounting Ledger Application!     ----------");
-        System.out.println("-----------------------------------------------------------------------\n");
 
         boolean exitApp = true;
         while (exitApp) {
@@ -71,17 +70,18 @@ public class Main {
             }
         }
     }
-
     // Top level menu,
     static void appHomeScreen() {
-        // System.out.println("-----------------------------------------------------------------------\n");
-        System.out.println("--------------- This is Your Home Screen Menu Please Select ----------------");
+
+        System.out.println("\n-----------------------------------------------------------------------");
+        System.out.println("----------     Welcome to Accounting Ledger Application!     ----------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        System.out.println("-------------- This is your Home Screen menu please select ---------------");
         System.out.println("D)      Add Deposit");
         System.out.println("P)      Make Payment (Debit)");
         System.out.println("L)      Show Ledger");
         System.out.println("X)      Exit Application\n");
     }
-
     // Method to add Deposit
     static void addDeposit() {
         //System.out.println("This is your Deposit Menu: \n");
@@ -116,7 +116,6 @@ public class Main {
             }
         }
     }
-
     // Method to make Payment
     static void addPayment() {
         System.out.println("-----------------------------------------------------------------------");
@@ -149,7 +148,6 @@ public class Main {
             }
         }
     }
-
     static Transaction getTransactionDetails(boolean isRecent, boolean isDeposit) {
         String description = Utilities.PromptForString("Please enter a short description for this transaction (e.g., 'Salary', 'Rent Payment'):  ");
         String vendor = Utilities.PromptForString("Please enter the name of the vendor or source (e.g., 'Amazon', 'Employer Name'):  ");
@@ -184,46 +182,23 @@ public class Main {
         }
         return new Transaction(date, time, description, vendor, amount);
     }
-
     static void addTransaction(boolean isRecent, boolean isDeposit) {
         Transaction transaction = getTransactionDetails(isRecent, isDeposit);
         transactions.add(transaction);
         System.out.println("You have successfully recorded the transaction!");
     }
-
     static void addRecentDeposit() {
         addTransaction(true, true);
     }
-
     static void addOldDeposit() {
         addTransaction(false, true);
     }
-
     static void addRecentPayment() {
         addTransaction(true, false);
     }
-
     static void addOldPayment() {
         addTransaction(false, false);
     }
-
-
-    //Ledger - Display all Entries
-    static void displayAllEntriesLedgers(){
-        System.out.println("All the Entries: ");
-        listTransaction();
-    }
-    // Display only Deposits
-    static void displayDepositsLedger(){
-        System.out.println("All Deposits Only: ");
-        printArray(getDepositsFromFullLedger(transactions));
-    }
-    // Display only Payments
-    static void displayPaymentsLedger(){
-        System.out.println("All Payments Only: ");
-        printArray(getPaymentsFromFullLedger(transactions));
-    }
-
 
     //Method to display Ledger // WOP
     static void ledgerMenu() {
@@ -241,23 +216,49 @@ public class Main {
             System.out.println("R) Generate Reports ");
             char command = Utilities.PromptForChar("Please Type and Enter From: [A] | [D] | [P] | [R]   ");
             switch (command) {
-
-                case 'N':
-                    addRecentDeposit();
+                case 'A':
+                    displayAllEntriesLedgers();
                     break;
-                case 'O':
-                    addOldDeposit();
+                case 'D':
+                    displayDepositsLedger();
+                    break;
+                case 'P':
+                    displayPaymentsLedger();
+                    break;
+                case 'R':
+                    displayReportsLedger();
                     break;
                 case 'X':
                     exitApp = false;
                     break;
                 default:
-                    System.out.println("*** ERROR! ***  Invalid Selection: Please Type and Enter From: [O] | [N] | [X] : ");
-
-
+                    System.out.println("*** ERROR! ***  Invalid Selection: Please Type and Enter From: [A] | [D] | [P] | [R] : ");
             }
         }
-
+    }
+    //Ledger - Display all Entries
+    static void displayAllEntriesLedgers(){
+        //System.out.println("-----------------------------------------------------------------------");
+        System.out.println("-------------------------- All the Entries ----------------------------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        //System.out.println("All the Entries: ");
+        listTransaction();
+    }
+    // Display only Deposits
+    static void displayDepositsLedger(){
+        //System.out.println("-----------------------------------------------------------------------");
+        System.out.println("------------------------- All Deposits Only ---------------------------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        //System.out.println("All Deposits Only: ");
+        printArray(getDepositsFromFullLedger(transactions));
+    }
+    // Display only Payments
+    static void displayPaymentsLedger(){
+        //System.out.println("-----------------------------------------------------------------------");
+        System.out.println("------------------------- All Payments Only ---------------------------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        //System.out.println("All Payments Only: ");
+        printArray(getPaymentsFromFullLedger(transactions));
     }
 
     // Display pre-defined Reports menu /// WOP
@@ -283,10 +284,24 @@ public class Main {
             char command = Utilities.PromptForChar("Please Type and Enter From: [1] | [2] | [3] | [4] | [5] | [0] | [H]  ");
             switch (command) {
 
-                case 'N':
-
+                case '1':
+                    displayThisMonthTransaction();
                     break;
-                case 'O':
+                case '2':
+                    displayPreviousMonthTransaction();
+                    break;
+                case '3':
+                    displayThisYearTransaction();
+                    break;
+                case '4':
+                    displayPreviousYearTransaction();
+                    break;
+                case '5':
+                    String x =Utilities.PromptForString("Please Enter the Vendor:  ");
+                    displayTransactionByVendor(x);
+                    ///  Find Transactions by Vendor
+                    break;
+                case '0':
 
                     break;
                 case 'X':
@@ -297,25 +312,84 @@ public class Main {
             }
         }
     }
-
-
-  static void displayThisMonthTransaction(){
+    static void displayThisMonthTransaction(){
+      System.out.println("-----------------------------------------------------------------------");
+      System.out.println("-------------- This is " + currentDate.getMonth().toString().toLowerCase() + " - "+currentDate.getYear() +" Reports ----------------");
+      System.out.println("-----------------------------------------------------------------------\n");
         for(Transaction t : transactions ){
-            if(true) /// the argument!
+            int transactionMonth = t.getDate().getMonthValue();
+            int transactionYear = t.getDate().getYear();
+
+            if(currentMonth==transactionMonth && currentYear==transactionYear) /// the argument!
             // Print each transaction in a formatted manner
-            System.out.printf(
+                System.out.printf(
                     "%-12s %-10s %-30s %-15s %10s%n",
                     t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
             );
         }
+      System.out.println("-----------------------------------------------------------------------\n");
     }
+    static void displayPreviousMonthTransaction(){
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("-------------- This is " + currentDate.minusMonths(1).getMonth().toString().toString().toLowerCase() + " - "+currentDate.getYear() +" Reports ----------------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        currentMonth--;
+        for(Transaction t : transactions ){
+            int transactionMonth = ((t.getDate().getMonthValue()));
+            int transactionYear = t.getDate().getYear();
 
+            if(currentMonth==(transactionMonth) && currentYear==transactionYear) /// the argument!
+                // Print each transaction in a formatted manner
+                System.out.printf(
+                        "%-12s %-10s %-30s %-15s %10s%n",
+                        t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
+                );
+        }
+        System.out.println("-----------------------------------------------------------------------\n");
+    }
+    static void displayThisYearTransaction(){
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("-------------- This is " + currentDate.getYear() +" Reports ----------------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        for(Transaction t : transactions ){
+            int transactionYear = t.getDate().getYear();
 
+            if(currentYear==transactionYear) /// the argument!
+                // Print each transaction in a formatted manner
+                System.out.printf(
+                        "%-12s %-10s %-30s %-15s %10s%n",
+                        t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
+                );
+        }
+    }
+    static void displayPreviousYearTransaction(){
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("-------------- This is " + currentDate.minusYears(1).getYear() +" Reports  ----------------");
+        System.out.println("-----------------------------------------------------------------------\n");
+        currentYear--;
+        for(Transaction t : transactions ){
+            int transactionYear = (t.getDate().getYear());
 
+            if(currentYear==transactionYear) /// the argument!
+                // Print each transaction in a formatted manner
+                System.out.printf(
+                        "%-12s %-10s %-30s %-15s %10s%n",
+                        t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
+                );
+        }
+    }
+    static void displayTransactionByVendor(String vendor){
+        for(Transaction t : transactions ){
 
-
-
-
+            if(vendor.equalsIgnoreCase(t.getVendor())){/// the argument!
+                // Print each transaction in a formatted manner
+                System.out.printf(
+                        "%-12s %-10s %-30s %-15s %10s%n",
+                        t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
+                );
+            }
+        }
+    }
 
     public static void listTransaction(){
 
@@ -327,14 +401,10 @@ public class Main {
         for(Transaction t : transactions ){
             // Print each transaction in a formatted manner
             System.out.printf(
-                    "%-12s %-10s %-30s %-15s %10s%n",
+                    "%-12s %-10s %-25s %-20s %10s%n",
                     t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
             );
         }
-    }
-    public static ArrayList<Transaction> getYearToDateFromFullLedger(ArrayList<Transaction> fullLedger){
-        //loop through all transaction (fullLedger) create a new arraylist with only dates that meet the correct criteria...
-        return null;
     }
     public static ArrayList<Transaction> getDepositsFromFullLedger(ArrayList<Transaction> fullLedger){
         //loop through all transaction (fullLedger) create a new arraylist with only deposits and return that..
