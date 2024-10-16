@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 
 
-public class AccountingLedgerApp {
+public class TEST_AccountingLedgerApp {
 
 
     static DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");

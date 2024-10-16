@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
-public class TestLedger {
+public class TEST_Ledger {
 
     static DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
