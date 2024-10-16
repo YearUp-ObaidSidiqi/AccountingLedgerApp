@@ -4,11 +4,6 @@ date|time|description|vendor|amount
 2024-08-12|11:45:35|stocks dividend|Stocks|5500.00
 2024-07-30|10:35:45|bonds interest|Bonds|4500.00
 2024-06-18|08:15:20|trading profit|Trading|6500.00
-2024-05-15|09:10:30|Amazon FBA sales|Amazon FBA|5000.00
-2024-04-01|11:55:10|real estate rental|Real Estate Income|3000.00
-2024-03-25|15:30:50|travel expense|Travel|-1000.00
-2024-02-14|12:15:45|maintenance service|Maintenance|-500.00
-2024-01-05|13:45:30|restaurant meal|Restaurant|-200.00
 2023-12-12|15:10:55|advertising expense|Ads|-300.00
 2023-11-15|16:45:20|salary payment|Salary|7200.00
 2023-10-05|10:10:20|consultation fee|Consultation|6800.00
@@ -16,28 +11,8 @@ date|time|description|vendor|amount
 2023-08-15|17:05:15|bonds interest|Bonds|5000.00
 2023-07-05|11:30:40|trading profit|Trading|4500.00
 2023-06-12|10:45:55|Amazon FBA sales|Amazon FBA|4000.00
-2023-05-01|08:35:25|real estate rental|Real Estate Income|3500.00
-2023-04-18|17:25:15|travel expense|Travel|-1200.00
-2023-03-12|14:20:30|maintenance service|Maintenance|-400.00
-2023-02-22|16:50:55|restaurant meal|Restaurant|-250.00
-2023-01-10|13:55:25|advertising expense|Ads|-800.00
 2022-12-15|16:20:10|salary payment|Salary|7000.00
-2022-11-20|10:15:30|consultation fee|Consultation|6000.00
-2022-10-05|15:05:55|stocks dividend|Stocks|5500.00
-2022-09-20|11:20:45|bonds interest|Bonds|4500.00
-2022-08-10|17:10:25|trading profit|Trading|4000.00
-2022-07-05|09:50:40|Amazon FBA sales|Amazon FBA|3000.00
-2022-06-12|10:30:50|real estate rental|Real Estate Income|2500.00
-2022-05-12|16:15:50|travel expense|Travel|-1500.00
 2022-04-20|12:20:45|maintenance service|Maintenance|-300.00
-2022-03-15|18:30:50|restaurant meal|Restaurant|-200.00
-2022-02-10|14:40:20|advertising expense|Ads|-1000.00
-2021-12-01|11:15:30|salary payment|Salary|6000.00
-2021-11-05|12:20:45|consultation fee|Consultation|5800.00
-2021-10-20|09:35:55|stocks dividend|Stocks|5500.00
-2021-09-15|15:40:25|bonds interest|Bonds|5200.00
-2021-08-05|14:50:15|trading profit|Trading|4800.00
-2021-07-25|11:00:10|Amazon FBA sales|Amazon FBA|3000.00
 2021-06-01|14:05:35|real estate rental|Real Estate Income|2400.00
 2021-05-10|16:45:05|travel expense|Travel|-800.00
 2021-04-15|09:55:20|maintenance service|Maintenance|-600.00

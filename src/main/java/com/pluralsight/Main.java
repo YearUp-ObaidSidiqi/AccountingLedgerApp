@@ -313,7 +313,6 @@ public class Main {
         System.out.println(header);
         printArray(getPaymentsFromFullLedger(transactions));
     }
-
     // Display pre-defined Reports menu /// WOP
     static boolean displayReportsLedger() {
         while (true) {
@@ -322,7 +321,7 @@ public class Main {
                     │                     This is your pre-defined Report section                              │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
-                    │                         Please select from the following:                                │
+                    │ Please select from the following:                                                        │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
                     │  1)      This Month's Transactions                                                       │
                     │  2)      Last Month's Transactions                                                       │
@@ -381,7 +380,6 @@ public class Main {
             }
         }
     }
-
     /* static void test(){
          double  totalOfDeposits = getAmountTotal((getDepositsFromFullLedger(transactions)));
          double totalOfPayments = -getAmountTotal((getPaymentsFromFullLedger(transactions)));
@@ -416,9 +414,6 @@ public class Main {
         return null;
     }
     static void displayPreviousMonthTransaction(){
-       /* System.out.println("-----------------------------------------------------------------------");
-        System.out.println("-------------- This is " + currentDate.minusMonths(1).getMonth().toString().toString().toLowerCase() + " - "+currentDate.getYear() +" Reports ----------------");
-        System.out.println("-----------------------------------------------------------------------\n");*/
         String reportHeader = """
                         ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                         │                              This is %s - %d Reports                            │
@@ -426,7 +421,6 @@ public class Main {
                         """.formatted(currentDate.minusMonths(1).getMonth().toString().toLowerCase(), currentDate.getYear());
 
         System.out.println(reportHeader);
-
         currentMonth--;
         for(Transaction t : transactions ){
             int transactionMonth = ((t.getDate().getMonthValue()));
@@ -439,12 +433,15 @@ public class Main {
                         t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
                 );
         }
-        System.out.println("────────────────────────────────────────────────────────────────────────────────────────────\n");
     }
     static void displayThisYearTransaction(){
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println("-------------- This is " + currentDate.getYear() +" Reports ----------------");
-        System.out.println("-----------------------------------------------------------------------\n");
+        String reportHeader = """
+                        ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+                        │                              This is %d Reports                                         │
+                        └──────────────────────────────────────────────────────────────────────────────────────────┘
+                        """.formatted(currentDate.getYear());
+
+        System.out.println(reportHeader);
         for(Transaction t : transactions ){
             int transactionYear = t.getDate().getYear();
 
@@ -457,9 +454,14 @@ public class Main {
         }
     }
     static void displayPreviousYearTransaction(){
-        System.out.println("-----------------------------------------------------------------------");
-        System.out.println("-------------- This is " + currentDate.minusYears(1).getYear() +" Reports  ----------------");
-        System.out.println("-----------------------------------------------------------------------\n");
+        String reportHeader = """
+                        ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+                        │                              This is %d Reports                                         │
+                        └──────────────────────────────────────────────────────────────────────────────────────────┘
+                        """.formatted(currentDate.minusYears(1).getYear());
+
+        System.out.println(reportHeader);
+
         currentYear--;
         for(Transaction t : transactions ){
             int transactionYear = (t.getDate().getYear());
@@ -473,7 +475,7 @@ public class Main {
         }
     }
     /// WOP
-                static void displayTransactionByVendor(String vendor){
+    static void displayTransactionByVendor(String vendor){
                     for(Transaction t : transactions ){
 
                         if(vendor.equalsIgnoreCase(t.getVendor())){ /// the argument!
@@ -485,10 +487,7 @@ public class Main {
                         }
                     }
                 }
-
     public static void listTransaction(){
-
-        System.out.println("List of All Transactions: ");
         printArray(transactions);
     }
     public static void printArray (ArrayList<Transaction> transactions){
@@ -501,17 +500,12 @@ public class Main {
             );
         }
     }
-
-
     /* public static double getAmountTotal(ArrayList<Transaction> transactions){
                     //loop through to generate a total amount, return that value.
 
     }*/
     public static ArrayList<Transaction> getDepositsFromFullLedger(ArrayList<Transaction> fullLedger){
         //loop through all transaction (fullLedger) create a new arraylist with only deposits and return that..
-        /*System.out.println("List of All Deposits  Transactions: ");
-        System.out.println("────────────────────────────────────────────────────────────────────────────────────────────");
-*/
         var depositTransaction = new ArrayList<Transaction>();
         for ( Transaction t : fullLedger){
             if (t.getAmount()>0){
@@ -522,9 +516,6 @@ public class Main {
     }
     public static ArrayList<Transaction> getPaymentsFromFullLedger(ArrayList<Transaction> fullLedger){
         //loop through all transaction (fullLedger) create a new arraylist with only Payment and return that..
-        /*System.out.println("List of All Payment  Transactions: ");
-        System.out.println("────────────────────────────────────────────────────────────────────────────────────────────");
-*/
         var paymentTransaction = new ArrayList<Transaction>();
         for ( Transaction t : fullLedger){
             if (t.getAmount()<0){
@@ -532,5 +523,24 @@ public class Main {
             }
         }
         return paymentTransaction ;
+    }
+    public static void writeTransactionsToCSV() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("accountingLegerApplicationData.csv"))) {
+            // Write header (if needed)
+            writer.write("Date|Time|Description|Category|Amount\n");
+
+            for (Transaction transaction : transactions) {
+                String line = String.format("%s|%s|%s|%s|%.2f\n",
+                        transaction.getDate().format(formatter1),
+                        transaction.getTime().format(formatter2),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
+                writer.write(line);
+            }
+        } catch (IOException e) {
+            System.out.println("***ERROR!! Writing to CSV");
+            System.out.println(e.getMessage());
+        }
     }
 }
