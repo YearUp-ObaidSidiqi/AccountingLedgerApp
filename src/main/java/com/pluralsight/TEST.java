@@ -35,7 +35,7 @@ public class TEST {
         System.out.println(currentYear2);
 
 
-            System.out.println("-----------------------------------------------------------------------");
+           /* System.out.println("-----------------------------------------------------------------------");
             System.out.println("-------------- This is " + currentDate.getMonth() +" Report section ----------------");
             System.out.println("-----------------------------------------------------------------------\n");
             for(Transaction t : transactions ){
@@ -50,8 +50,16 @@ public class TEST {
                     );
             }
             System.out.println("-----------------------------------------------------------------------\n");
+*/
 
 
+        String reportHeader = """
+                        ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+                        │                              This is %s - %d Reports                              │
+                        └──────────────────────────────────────────────────────────────────────────────────────────┘
+                        """.formatted(currentDate.getMonth().toString().toLowerCase(), currentDate.getYear());
+
+        System.out.println(reportHeader);
 
 
     }
