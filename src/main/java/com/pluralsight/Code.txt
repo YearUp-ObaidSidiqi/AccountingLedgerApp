@@ -93,4 +93,8 @@
            }
            moneyLabel.setText('$' + String.valueOf(Math.round(sum * 100.0) / 100.0))
 
-
+    {
+        Readme.--
+    |  |  |  |  | *Return to Report Menu* |
+    |  |  |  |  | *Return to Home Screen Menu* |
+    }
