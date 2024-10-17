@@ -1,10 +1,11 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 
@@ -42,7 +43,6 @@ public class Main {
         }
         return transaction;
     }
-
     public static void main(String[] args) throws IOException {
         appHomeScreen();
     }
@@ -56,7 +56,7 @@ public class Main {
                     │                          Welcome to Accounting Ledger Application!                       │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
-                    │ This is your Home screen menu please select from the following:                          │                                      │
+                    │ This is your Home screen menu please select from the following:                          │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
                     │  D)      Add Deposit                                                                     │
                     │  P)      Make Payment (Debit)                                                            │
@@ -78,6 +78,7 @@ public class Main {
                         ledgerMenu();
                         break;
                     case 'X':
+                        writeTransactionsToCSV();
                         String thankYouMessage = """
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │                                Thank you for choosing Us!!                               │
@@ -181,9 +182,10 @@ public class Main {
 
     // Payments and deposit sub-methods
     static Transaction getTransactionDetails(boolean isRecent, boolean isDeposit) {
-        String description = Utilities.PromptForString("Please enter a short description for this transaction (e.g., 'Salary', 'Rent Payment'):  ");
-        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source (e.g., 'Amazon', 'Employer Name'):  ");
-        double amount = Utilities.PromptForDouble("Please input the amount (e.g., 800.50):  ");
+        System.out.println("────────────────────────────────────────────────────────────────────────────────────────────\n");
+        String description = Utilities.PromptForString("Please enter a short description for this transaction:  ");
+        String vendor = Utilities.PromptForString("Please enter the name of the vendor or source:  ");
+        double amount = Utilities.PromptForDouble("Please input the amount:  ");
 
         // To make the amount negative
         if (!isDeposit) {
@@ -232,7 +234,7 @@ public class Main {
         addTransaction(false, false);
     }
 
-    // Method to show Ledger
+    //Method to show Ledger
     static void ledgerMenu() {
 
         boolean exitApp = true;
@@ -292,6 +294,7 @@ public class Main {
         System.out.println(header);
 
         listTransaction();
+        CurrentBalanceM(transactions);
     }
     // Display only Deposits
     static void displayDepositsLedger(){
@@ -302,6 +305,7 @@ public class Main {
                     """;
         System.out.println(header);
         printArray(getDepositsFromFullLedger(transactions));
+        CurrentBalanceM(getDepositsFromFullLedger(transactions));
     }
     // Display only Payments
     static void displayPaymentsLedger(){
@@ -312,6 +316,7 @@ public class Main {
                     """;
         System.out.println(header);
         printArray(getPaymentsFromFullLedger(transactions));
+        CurrentBalanceM(getPaymentsFromFullLedger(transactions));
     }
     // Display pre-defined Reports menu /// WOP
     static boolean displayReportsLedger() {
@@ -380,11 +385,7 @@ public class Main {
             }
         }
     }
-    /* static void test(){
-         double  totalOfDeposits = getAmountTotal((getDepositsFromFullLedger(transactions)));
-         double totalOfPayments = -getAmountTotal((getPaymentsFromFullLedger(transactions)));
-         double totalCurrentBalance = getAmountTotal(transactions);
-     }*/
+
     static void displayThisMonthTransaction(){
         String reportHeader = """
                         ┌──────────────────────────────────────────────────────────────────────────────────────────┐
@@ -394,6 +395,7 @@ public class Main {
 
         System.out.println(reportHeader);
 
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
         for(Transaction t : transactions ){
             int transactionMonth = t.getDate().getMonthValue();
             int transactionYear = t.getDate().getYear();
@@ -406,12 +408,7 @@ public class Main {
                 );
         }
         System.out.println("────────────────────────────────────────────────────────────────────────────────────────────\n");
-    }
-    static ArrayList<Transaction> getThisMonthTransactions(ArrayList<Transaction> transactions){
-        ArrayList<Transaction> filteredResults = new ArrayList<Transaction>();
-        //loop through all transactions and populate filtered results and then
-        //return filtered results;
-        return null;
+        CurrentBalanceM(getThisMonthTransactions(transactions));
     }
     static void displayPreviousMonthTransaction(){
         String reportHeader = """
@@ -422,6 +419,7 @@ public class Main {
 
         System.out.println(reportHeader);
         currentMonth--;
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
         for(Transaction t : transactions ){
             int transactionMonth = ((t.getDate().getMonthValue()));
             int transactionYear = t.getDate().getYear();
@@ -442,6 +440,7 @@ public class Main {
                         """.formatted(currentDate.getYear());
 
         System.out.println(reportHeader);
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
         for(Transaction t : transactions ){
             int transactionYear = t.getDate().getYear();
 
@@ -463,6 +462,7 @@ public class Main {
         System.out.println(reportHeader);
 
         currentYear--;
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
         for(Transaction t : transactions ){
             int transactionYear = (t.getDate().getYear());
 
@@ -474,8 +474,8 @@ public class Main {
                 );
         }
     }
-    /// WOP
     static void displayTransactionByVendor(String vendor){
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
                     for(Transaction t : transactions ){
 
                         if(vendor.equalsIgnoreCase(t.getVendor())){ /// the argument!
@@ -487,23 +487,7 @@ public class Main {
                         }
                     }
                 }
-    public static void listTransaction(){
-        printArray(transactions);
-    }
-    public static void printArray (ArrayList<Transaction> transactions){
-       // System.out.println("────────────────────────────────────────────────────────────────────────────────────────────\n");
-        for(Transaction t : transactions ){
-            // Print each transaction in a formatted manner
-            System.out.printf(
-                    "%-12s %-10s %-25s %-20s %10s%n",
-                    t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
-            );
-        }
-    }
-    /* public static double getAmountTotal(ArrayList<Transaction> transactions){
-                    //loop through to generate a total amount, return that value.
 
-    }*/
     public static ArrayList<Transaction> getDepositsFromFullLedger(ArrayList<Transaction> fullLedger){
         //loop through all transaction (fullLedger) create a new arraylist with only deposits and return that..
         var depositTransaction = new ArrayList<Transaction>();
@@ -524,10 +508,41 @@ public class Main {
         }
         return paymentTransaction ;
     }
+    public static ArrayList<Transaction> getThisMonthTransactions(ArrayList<Transaction> transactions){
+        var filteredResults = new ArrayList<Transaction>();
+
+        for (Transaction t : transactions) {
+
+            int transactionMonth = t.getDate().getMonthValue();
+            int transactionYear = t.getDate().getYear();
+
+            if (currentMonth == transactionMonth && currentYear == transactionYear) /// the argument!
+                filteredResults.add(new Transaction(t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount()));
+        }
+        return filteredResults;
+    }
+
+    public static void listTransaction(){
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        printArray(transactions);
+
+
+    }
+    public static void printArray (ArrayList<Transaction> transactions){
+        // System.out.println("────────────────────────────────────────────────────────────────────────────────────────────\n");
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        for(Transaction t : transactions ){
+            // Print each transaction in a formatted manner
+            System.out.printf(
+                    "%-12s %-10s %-25s %-20s %10s%n",
+                    t.getDate().format(formatter1), t.getTime().format(formatter2), t.getDescription(), t.getVendor(), t.getAmount()
+            );
+        }
+    }
     public static void writeTransactionsToCSV() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("accountingLegerApplicationData.csv"))) {
             // Write header (if needed)
-            writer.write("Date|Time|Description|Category|Amount\n");
+            writer.write("Date|Time|Description|Vendor|Amount\n");
 
             for (Transaction transaction : transactions) {
                 String line = String.format("%s|%s|%s|%s|%.2f\n",
@@ -537,10 +552,31 @@ public class Main {
                         transaction.getVendor(),
                         transaction.getAmount());
                 writer.write(line);
-            }
+                }
         } catch (IOException e) {
             System.out.println("***ERROR!! Writing to CSV");
             System.out.println(e.getMessage());
         }
+    }
+    public static double getAmountTotal(ArrayList<Transaction> transactions){
+        double amount = 0;
+        //loop through to generate a total amount, return that value.
+        for (Transaction t : transactions) {
+
+            amount += t.getAmount();
+        }
+        return amount;
+    }
+    static void CurrentBalanceM(ArrayList<Transaction> transactions){
+        double  totalOfDeposits = getAmountTotal(transactions);
+        double totalOfPayments = -getAmountTotal(transactions);
+        double currentBalance = (totalOfDeposits-totalOfPayments);
+        String balanceHeader = """
+                        ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+                        │                                      Balance: $%.2f                                  │
+                        └──────────────────────────────────────────────────────────────────────────────────────────┘
+                        """.formatted(currentBalance);
+
+        System.out.println(balanceHeader);
     }
 }

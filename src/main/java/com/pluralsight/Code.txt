@@ -88,4 +88,9 @@
             // var bufferedReader = new BufferedReader(new FileReader("accountingLegerApplicationData.csv"));
            // var bufferWriter = new BufferedWriter (new FileWriter("accountingLegerApplicationData.csv"));
 
+           for (Transactions.Transaction transaction : transactions) {
+               sum += transaction.getAmount();
+           }
+           moneyLabel.setText('$' + String.valueOf(Math.round(sum * 100.0) / 100.0))
+
 

@@ -1,4 +1,4 @@
-date|time|description|vendor|amount
+Date|Time|Description|Vendor|Amount
 2024-10-10|09:30:15|salary payment|Salary|7000.00
 2024-09-05|16:25:50|consultation fee|Consultation|6000.00
 2024-08-12|11:45:35|stocks dividend|Stocks|5500.00
@@ -27,3 +27,6 @@ date|time|description|vendor|amount
 2024-09-08|15:55:40|real estate rental|Real Estate Income|3100.00
 2024-09-03|14:10:20|Amazon FBA sales|Amazon FBA|4500.00
 2024-08-29|09:20:10|stocks dividend|Stocks|5600.00
+2024-10-17|08:49:09|RENT|LANDLORD|3500.00
+2024-10-17|11:47:02|RENT|SIRBNB|-9800.00
+2024-10-17|11:52:41|ADS|FACEBOOK |-450.00
