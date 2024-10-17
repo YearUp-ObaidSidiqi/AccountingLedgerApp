@@ -24,6 +24,8 @@ The application has below menu:
 ### Interesting Code
 One interesting part of the project is the getTransactionDetails Method, which allows to add a recent or an old, deposit or payments. This method demonstrates the power Boolean manipulation and date handling in Java to perform different tasks.
 
+
+
 ### CSV File Format
 
 Transactions are saved as individual lines in a CSV file (transactions.csv) with the following format:
@@ -52,6 +54,9 @@ javac AccountingLedgerApp.java
 java AccountingLedgerApp
 
 ```
+## Screenshots 
+![Here is the screenshots](./Screenshot.png)
+
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](https://choosealicense.com/licenses/mit/) file for more details.

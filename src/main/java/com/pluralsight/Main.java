@@ -4,7 +4,6 @@ import java.io.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class Main {
         }
         return transaction;
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         appHomeScreen();
     }
 
@@ -83,7 +82,7 @@ public class Main {
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │                                Thank you for choosing Us!!                               │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
-                            """;
+                           \s""";
                         System.out.println(thankYouMessage);
                         exitApp = false;
                         break;
@@ -92,7 +91,7 @@ public class Main {
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │*** ERROR! ***  Invalid Selection: Please Type and Enter From: [D], [P], [L], [X] :       │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
-                            """;
+                           \s""";
                         System.out.println(error);
                 }
             }
@@ -131,7 +130,7 @@ public class Main {
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │*** ERROR! ***  Invalid Selection: Please Type and Enter From: [N], [O], [X] :            │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
-                            """;
+                           \s""";
                     System.out.println(error);
 
 
@@ -173,7 +172,7 @@ public class Main {
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │*** ERROR! ***  Invalid Selection: Please Type and Enter From: [D], [P], [L], [X] :       │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
-                            """;
+                           \s""";
                     System.out.println(error);
 
             }
@@ -279,7 +278,7 @@ public class Main {
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │*** ERROR! ***  Invalid Selection: Please Type and Enter From: [A], [D], [P], [R], [X] :  │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
-                            """;
+                           \s""";
                     System.out.println(error);
             }
         }
@@ -380,7 +379,7 @@ public class Main {
                     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
                     │*** ERROR! *** Please type and enter from: [1], [2], [3], [4], [5], [4], [5], [0], [H]    │
                     └──────────────────────────────────────────────────────────────────────────────────────────┘
-                            """;
+                           \s""";
                     System.out.println(error);
             }
         }
@@ -394,8 +393,7 @@ public class Main {
                         """.formatted(currentDate.getMonth().toString().toLowerCase(), currentDate.getYear());
 
         System.out.println(reportHeader);
-
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
         for(Transaction t : transactions ){
             int transactionMonth = t.getDate().getMonthValue();
             int transactionYear = t.getDate().getYear();
@@ -419,7 +417,7 @@ public class Main {
 
         System.out.println(reportHeader);
         currentMonth--;
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
         for(Transaction t : transactions ){
             int transactionMonth = ((t.getDate().getMonthValue()));
             int transactionYear = t.getDate().getYear();
@@ -440,7 +438,7 @@ public class Main {
                         """.formatted(currentDate.getYear());
 
         System.out.println(reportHeader);
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
         for(Transaction t : transactions ){
             int transactionYear = t.getDate().getYear();
 
@@ -462,7 +460,7 @@ public class Main {
         System.out.println(reportHeader);
 
         currentYear--;
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
         for(Transaction t : transactions ){
             int transactionYear = (t.getDate().getYear());
 
@@ -475,7 +473,7 @@ public class Main {
         }
     }
     static void displayTransactionByVendor(String vendor){
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
                     for(Transaction t : transactions ){
 
                         if(vendor.equalsIgnoreCase(t.getVendor())){ /// the argument!
@@ -489,7 +487,7 @@ public class Main {
                 }
 
     public static ArrayList<Transaction> getDepositsFromFullLedger(ArrayList<Transaction> fullLedger){
-        //loop through all transaction (fullLedger) create a new arraylist with only deposits and return that..
+        //loop through all transaction (fullLedger) create a new arraylist with only deposits and return that
         var depositTransaction = new ArrayList<Transaction>();
         for ( Transaction t : fullLedger){
             if (t.getAmount()>0){
@@ -499,7 +497,7 @@ public class Main {
         return depositTransaction ;
     }
     public static ArrayList<Transaction> getPaymentsFromFullLedger(ArrayList<Transaction> fullLedger){
-        //loop through all transaction (fullLedger) create a new arraylist with only Payment and return that..
+        //loop through all transaction (fullLedger) create a new arraylist with only Payment and return that
         var paymentTransaction = new ArrayList<Transaction>();
         for ( Transaction t : fullLedger){
             if (t.getAmount()<0){
@@ -510,7 +508,6 @@ public class Main {
     }
     public static ArrayList<Transaction> getThisMonthTransactions(ArrayList<Transaction> transactions){
         var filteredResults = new ArrayList<Transaction>();
-
         for (Transaction t : transactions) {
 
             int transactionMonth = t.getDate().getMonthValue();
@@ -523,14 +520,12 @@ public class Main {
     }
 
     public static void listTransaction(){
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
         printArray(transactions);
-
-
     }
     public static void printArray (ArrayList<Transaction> transactions){
         // System.out.println("────────────────────────────────────────────────────────────────────────────────────────────\n");
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getTime).reversed());
+        transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
         for(Transaction t : transactions ){
             // Print each transaction in a formatted manner
             System.out.printf(
